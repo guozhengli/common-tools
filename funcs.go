@@ -17,14 +17,14 @@ func GetHostName() string {
 	return name
 }
 
-func GetLocalIp() string {
+func GetLocalIp() (string, error) {
 	conn, err := net.Dial("udp", "8.8.8.8:53")
 	if err != nil {
 		log.Printf("get local addr err:%v", err)
-		return ""
+		return "", nil
 	} else {
 		localIp := strings.Split(conn.LocalAddr().String(), ":")[0]
 		conn.Close()
-		return localIp
+		return localIp, nil
 	}
 }
